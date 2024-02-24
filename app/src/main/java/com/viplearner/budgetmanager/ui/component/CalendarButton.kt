@@ -73,7 +73,9 @@ fun CalendarButton(
             }
         }
         DropdownMenu(
-            modifier = Modifier.align(Alignment.BottomCenter).background(base0),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .background(base0),
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false },
             properties = PopupProperties(
@@ -86,7 +88,10 @@ fun CalendarButton(
                 width = maxWidth,
                 currentMonth = currentMonth,
                 currentYear = currentYear,
-                confirmButtonClicked = onMonthPicked
+                confirmButtonClicked = { month, year ->
+                    isExpanded = false
+                    onMonthPicked(month, year)
+                }
             ) {
                 isExpanded = false
             }
