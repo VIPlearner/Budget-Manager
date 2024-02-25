@@ -1,16 +1,27 @@
 package com.viplearner.budgetmanager.ui.screens.main
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.MoreVert
+import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -19,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,11 +49,14 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.viplearner.budgetmanager.data.entities.TransactionType
+import com.viplearner.budgetmanager.ui.component.BottomBar
 import com.viplearner.budgetmanager.ui.component.BudgetCard
 import com.viplearner.budgetmanager.ui.component.ErrorDialog
 import com.viplearner.budgetmanager.ui.component.LabeledTextField
@@ -71,6 +86,7 @@ fun MainScreen(
     }
 
     Scaffold(
+        modifier = Modifier.navigationBarsPadding(),
         floatingActionButton = {
             IconButton(
                 modifier = Modifier.size(60.dp),
@@ -88,9 +104,12 @@ fun MainScreen(
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Add",
                     tint = base0,
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier.size(35.dp)
                 )
             }
+        },
+        bottomBar = {
+            BottomBar()
         },
         containerColor = base0
     ) {
@@ -120,7 +139,9 @@ fun MainScreen(
                         visualTransformation = rememberCurrencyVisualTransformation(currency = "USD")
                     )
 
-                    Box(modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)) {
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp)) {
                         var isExpanded1 by remember { mutableStateOf(false) }
                         Card(
                             shape = RoundedCornerShape(5.dp),
@@ -192,31 +213,86 @@ fun MainScreen(
             }
         }
 
-        when(viewState){
-            MainScreenViewState.Loading -> {
-                LoadingScreen()
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .background(
+                color = primary,
+                shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp)
+            ))
+
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .padding(20.dp)
+                .padding(top = 30.dp)
+        ){
+            Row (
+                modifier = Modifier.padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ){
+                Row(modifier = Modifier.clickable {  }, verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Monthly Budget",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Medium,
+                        color = base0
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowDown,
+                        contentDescription = "Arrow Down",
+                        tint = base0,
+                    )
+                }
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                Row {
+                    IconButton(onClick = { }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Share,
+                            contentDescription = "Share",
+                            tint = base0,
+                        )
+                    }
+                    IconButton(onClick = { }) {
+                        Icon(
+                            imageVector = Icons.Outlined.MoreVert,
+                            contentDescription = "Share",
+                            tint = base0,
+                        )
+                    }
+                }
+
+
+
             }
-            is MainScreenViewState.Loaded -> {
-                BudgetCard(
-                    modifier = Modifier
-                        .padding(it)
-                        .padding(20.dp),
-                    budgetCategoryList = (viewState as MainScreenViewState.Loaded).budgetCategoryList,
-                    monthYearText = (viewState as MainScreenViewState.Loaded).monthYearText,
-                    currentMonth = (viewState as MainScreenViewState.Loaded).currentMonth,
-                    currentYear = (viewState as MainScreenViewState.Loaded).currentYear,
-                    totalBudgetStr = (viewState as MainScreenViewState.Loaded).totalBudgetStr,
-                    spentBudgetStr = (viewState as MainScreenViewState.Loaded).spentBudgetStr,
-                    remainingBudgetStr = (viewState as MainScreenViewState.Loaded).remainingBudgetStr
-                ) {month, year ->
-                    viewModel.onMonthYearSelected(month, year)
+            when (viewState) {
+                MainScreenViewState.Loading -> {
+                    LoadingScreen()
+                }
+
+                is MainScreenViewState.Loaded -> {
+                    BudgetCard(
+                        modifier = Modifier,
+                        budgetCategoryList = (viewState as MainScreenViewState.Loaded).budgetCategoryList,
+                        monthYearText = (viewState as MainScreenViewState.Loaded).monthYearText,
+                        currentMonth = (viewState as MainScreenViewState.Loaded).currentMonth,
+                        currentYear = (viewState as MainScreenViewState.Loaded).currentYear,
+                        totalBudgetStr = (viewState as MainScreenViewState.Loaded).totalBudgetStr,
+                        spentBudgetStr = (viewState as MainScreenViewState.Loaded).spentBudgetStr,
+                        remainingBudgetStr = (viewState as MainScreenViewState.Loaded).remainingBudgetStr
+                    ) { month, year ->
+                        viewModel.onMonthYearSelected(month, year)
+                    }
+                }
+
+                is MainScreenViewState.Error -> {
+                    ErrorDialog(errorMessage = (viewState as MainScreenViewState.Error).errorMessage)
                 }
             }
-            is MainScreenViewState.Error -> {
-                ErrorDialog(errorMessage = (viewState as MainScreenViewState.Error).errorMessage)
-            }
         }
-
 
 
 

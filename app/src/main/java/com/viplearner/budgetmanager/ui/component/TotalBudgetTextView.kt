@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.viplearner.budgetmanager.ui.theme.base60
 import com.viplearner.budgetmanager.ui.theme.base80
 import com.viplearner.budgetmanager.ui.theme.secondary
@@ -39,8 +40,8 @@ fun TotalBudgetTextViewItem(
 
             Text(
                 text = value,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.SemiBold,
                 color = color
             )
         }

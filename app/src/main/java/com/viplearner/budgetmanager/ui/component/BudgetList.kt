@@ -3,6 +3,8 @@ package com.viplearner.budgetmanager.ui.component
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,7 +25,7 @@ fun BudgetList(
 ) {
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         items(budgetCategoryList) { budgetCategory ->
             BudgetCategoryItem(

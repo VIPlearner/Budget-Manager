@@ -35,13 +35,16 @@ fun BudgetCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(13.dp),
+            .padding(horizontal = 13.dp),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = base0),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
 
-        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Column(
+            modifier = Modifier.padding(top = 15.dp, bottom = 25.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
             CalendarButton(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 monthYearText = monthYearText,
@@ -59,13 +62,12 @@ fun BudgetCard(
                 remainingBudget = remainingBudgetStr
             )
             BudgetProgressBar(
-                modifier = Modifier.padding(10.dp),
+                modifier = Modifier.padding(horizontal = 20.dp),
                 budgetCategoryList = budgetCategoryList
             )
             BudgetList(
                 budgetCategoryList = budgetCategoryList
             )
-            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }

@@ -26,7 +26,7 @@ fun ProgressBar(
     modifier: Modifier = Modifier,
     currentProgress: Float,
     maxProgress: Float,
-    height: Dp = 4.dp,
+    height: Dp = 6.dp,
     color: Color,
 ) {
     BoxWithConstraints(

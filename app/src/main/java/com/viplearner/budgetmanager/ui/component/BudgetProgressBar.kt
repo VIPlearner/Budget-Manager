@@ -29,8 +29,8 @@ fun BudgetProgressBar(
     BoxWithConstraints(
         modifier = modifier
             .background(color = base40, shape = RoundedCornerShape(13.dp))
-            .clip(RoundedCornerShape(13.dp))
-            .height(40.dp)
+            .clip(RoundedCornerShape(15.dp))
+            .height(45.dp)
             .fillMaxWidth()
     ){
         val totalBudget = budgetCategoryList.sumOf {

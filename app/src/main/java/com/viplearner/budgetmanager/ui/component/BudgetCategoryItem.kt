@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.viplearner.budgetmanager.R
 import com.viplearner.budgetmanager.ui.theme.base80
 import com.viplearner.budgetmanager.ui.theme.secondary
@@ -43,17 +45,20 @@ fun BudgetCategoryItem(
     isEnabled: Boolean
 ) {
     Box{
-        Column(modifier = modifier.fillMaxWidth()) {
-            Row(Modifier.padding(10.dp)) {
+        Column(modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 5.dp)
+        ) {
+            Row(Modifier.padding(top = 10.dp, start = 15.dp, end = 15.dp, bottom = 5.dp), verticalAlignment = Alignment.CenterVertically) {
                 Card(
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.size(50.dp),
                     colors = CardDefaults.cardColors(containerColor = color),
                     shape = CircleShape,
 
                     ) {
                     Icon(
                         modifier = Modifier
-                            .padding(6.dp)
+                            .padding(10.dp)
                             .fillMaxSize(),
                         imageVector = icon,
                         contentDescription = "Category Icon",
@@ -63,16 +68,17 @@ fun BudgetCategoryItem(
                 Spacer(modifier = Modifier.width(10.dp))
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(3.dp),
+                    verticalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     Text(
                         text = categoryName,
                         fontWeight = FontWeight.SemiBold,
-                        style = MaterialTheme.typography.titleSmall
+                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp),
                     )
+                    Spacer(modifier = Modifier.height(4.dp))
                     val annotatedString = buildAnnotatedString {
                         val style =
-                            MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.SemiBold)
+                            MaterialTheme.typography.titleMedium.copy( fontWeight = FontWeight.SemiBold)
                         pushStyle(style.copy(color = base80).toSpanStyle())
                         append("spent ")
                         pushStyle(style.copy(color = secondary).toSpanStyle())
@@ -86,18 +92,18 @@ fun BudgetCategoryItem(
                 }
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(3.dp)
+                    verticalArrangement = Arrangement.spacedBy(0.dp)
                 ) {
                     Text(
-                        text = "\$$remainingBudget",
+                        text = "\$${String.format("%.0f",remainingBudget)}",
                         fontWeight = FontWeight.SemiBold,
                         color = secondary,
-                        style = MaterialTheme.typography.titleMedium
-
+                        style = MaterialTheme.typography.headlineSmall
                     )
                     Text(
                         text = "left",
-                        style = MaterialTheme.typography.labelLarge,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
 
